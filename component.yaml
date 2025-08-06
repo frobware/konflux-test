@@ -1,0 +1,12 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  name: konflux-test-component
+  namespace: amcdermo-tenant
+spec:
+  application: konflux-test
+  componentName: konflux-test-component
+  source:
+    git:
+      url: https://github.com/frobware/konflux-test
+      revision: main

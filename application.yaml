@@ -1,0 +1,8 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Application
+metadata:
+  name: konflux-test
+  namespace: amcdermo-tenant
+spec:
+  displayName: "Konflux Test Application"
+  description: "Test application for validating Application-Per-Release pattern"

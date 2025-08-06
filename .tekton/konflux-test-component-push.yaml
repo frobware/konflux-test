@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    build.appstudio.openshift.io/repo: https://github.com/frobware/konflux-test?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+  creationTimestamp: null
+  labels:
+    appstudio.openshift.io/application: konflux-test
+    appstudio.openshift.io/component: konflux-test-component
+    pipelines.appstudio.openshift.io/type: build
+  name: konflux-test-component-on-push
+  namespace: amcdermo-tenant
+spec:
+  params:
+  - name: git-url
+    value: '{{source_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: output-image
+    value: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-component:{{revision}}
+  - name: dockerfile
+    value: ./Dockerfile
+  pipelineRef:
+    name: build-pipeline
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-konflux-test-component
+status: {}
