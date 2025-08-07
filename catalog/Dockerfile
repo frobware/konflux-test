@@ -1,10 +1,8 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi8/ubi:latest
 
 # Install opm tool for File-Based Catalog
-RUN microdnf install -y curl tar gzip && \
-    curl -L https://github.com/operator-framework/operator-registry/releases/download/v1.45.0/linux-amd64-opm > /usr/local/bin/opm && \
-    chmod +x /usr/local/bin/opm && \
-    microdnf clean all
+RUN curl -L https://github.com/operator-framework/operator-registry/releases/download/v1.45.0/linux-amd64-opm > /usr/local/bin/opm && \
+    chmod +x /usr/local/bin/opm
 
 # Copy catalog definition
 COPY catalog /catalog
