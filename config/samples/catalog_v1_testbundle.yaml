@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/managed-by: kustomize
   name: testbundle-sample
 spec:
-  operatorImage: "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:c8572c1e025ff71c21a13294769c695487dfdcbb57f2c3d311eaf18b88ceebb5"
+  operatorImage: "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:d7a24e11a8132e4b6f5b733773eac9e1332f495b34b30b9befb7ead7299c558f"
   bundleImage: "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-b058a-c2@sha256:3cea6a74d702213c26a542c514b2ca15e673380e9af5de9d24b27018d03482e4"
   version: "v1.0.0"
   channel: "stable"
