@@ -1,0 +1,15 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Application
+metadata:
+  creationTimestamp: "2025-08-07T11:22:04Z"
+  generation: 1
+  name: konflux-test
+  namespace: amcdermo-tenant
+  resourceVersion: "4693320139"
+  uid: f507f1ea-7969-414f-b644-2e2fbdcf562c
+spec:
+  appModelRepository:
+    url: ""
+  displayName: konflux-test
+  gitOpsRepository:
+    url: ""
