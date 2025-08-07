@@ -1,0 +1,15 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    build.appstudio.openshift.io/request: configure-pac
+    build.appstudio.openshift.io/build-nudge-files: "bundle/manifests/konflux-test-operator.clusterserviceversion.yaml"
+  name: konflux-test-bundle
+  namespace: amcdermo-tenant
+spec:
+  application: konflux-test
+  componentName: konflux-test-bundle
+  source:
+    git:
+      dockerfileUrl: bundle/Dockerfile
+      url: https://github.com/frobware/konflux-test

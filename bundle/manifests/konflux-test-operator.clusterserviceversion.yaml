@@ -1,0 +1,201 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "catalog.konflux.example.com/v1",
+          "kind": "TestBundle",
+          "metadata": {
+            "labels": {
+              "app.kubernetes.io/managed-by": "kustomize",
+              "app.kubernetes.io/name": "konflux-test-operator"
+            },
+            "name": "testbundle-sample"
+          },
+          "spec": {
+            "bundleImage": "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-bundle@sha256:placeholder",
+            "channel": "stable",
+            "operatorImage": "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-operator@sha256:placeholder",
+            "version": "v1.0.0"
+          }
+        }
+      ]
+    capabilities: Basic Install
+    createdAt: "2025-08-07T18:30:00Z"
+    operators.operatorframework.io/builder: operator-sdk-v1.36.1
+    operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
+  name: konflux-test-operator.v1.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: TestBundle is the Schema for the testbundles API
+      displayName: Test Bundle
+      kind: TestBundle
+      name: testbundles.catalog.konflux.example.com
+      version: v1
+  description: Konflux Test Operator for demonstrating OLM patterns
+  displayName: Konflux Test Operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - "*"
+          verbs:
+          - "*"
+        - apiGroups:
+          - catalog.konflux.example.com
+          resources:
+          - testbundles
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - catalog.konflux.example.com
+          resources:
+          - testbundles/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - catalog.konflux.example.com
+          resources:
+          - testbundles/status
+          verbs:
+          - get
+          - patch
+          - update
+        serviceAccountName: konflux-test-operator-controller-manager
+      deployments:
+      - label:
+          app.kubernetes.io/component: manager
+          app.kubernetes.io/created-by: konflux-test-operator
+          app.kubernetes.io/instance: controller-manager
+          app.kubernetes.io/managed-by: kustomize
+          app.kubernetes.io/name: deployment
+          app.kubernetes.io/part-of: konflux-test-operator
+          control-plane: controller-manager
+        name: konflux-test-operator-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              annotations:
+                kubectl.kubernetes.io/default-container: manager
+              labels:
+                control-plane: controller-manager
+            spec:
+              containers:
+              - args:
+                - --leader-elect
+                command:
+                - /manager
+                env:
+                - name: ANSIBLE_GATHERING
+                  value: explicit
+                image: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-operator@sha256:placeholder
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                name: manager
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 8081
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 128Mi
+                  requests:
+                    cpu: 10m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              securityContext:
+                runAsNonRoot: true
+              serviceAccountName: konflux-test-operator-controller-manager
+              terminationGracePeriodSeconds: 10
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - coordination.k8s.io
+          resources:
+          - leases
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
+        serviceAccountName: konflux-test-operator-controller-manager
+    strategy: deployment
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - konflux
+  - testing
+  - operator
+  links:
+  - name: Konflux Test Operator
+    url: https://github.com/frobware/konflux-test
+  maintainers:
+  - email: test@example.com
+    name: Test Maintainer
+  maturity: alpha
+  provider:
+    name: Red Hat
+    url: https://redhat.com
+  version: 1.0.1

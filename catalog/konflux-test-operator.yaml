@@ -1,0 +1,23 @@
+---
+schema: olm.package
+name: konflux-test-operator
+description: |
+  A test operator for demonstrating Konflux nudging patterns in OLM.
+icon:
+  mediatype: image/svg+xml
+  data: |
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="#e74c3c"/>
+      <text x="50" y="55" text-anchor="middle" font-family="Arial" font-size="30" fill="white">K</text>
+    </svg>
+
+---
+schema: olm.channel
+package: konflux-test-operator
+name: stable
+entries:
+- name: konflux-test-operator.v1.0.1
+
+---
+schema: olm.bundle
+image: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-bundle@sha256:placeholder
