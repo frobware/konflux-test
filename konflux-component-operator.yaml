@@ -1,0 +1,29 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ImageRepository
+metadata:
+  labels:
+    appstudio.redhat.com/application: konflux-test
+    appstudio.redhat.com/component: konflux-test-operator
+  name: konflux-test-operator
+  namespace: amcdermo-tenant
+spec:
+  image:
+    name: amcdermo-tenant/konflux-test-operator
+    visibility: public
+---
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    build.appstudio.openshift.io/request: configure-pac
+  name: konflux-test-operator
+  namespace: amcdermo-tenant
+spec:
+  application: konflux-test
+  componentName: konflux-test-operator
+  containerImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-operator
+  source:
+    git:
+      dockerfileUrl: Dockerfile
+      url: https://github.com/frobware/konflux-test
+      revision: main

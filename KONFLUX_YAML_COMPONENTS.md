@@ -1,72 +1,87 @@
-# Konflux YAML Component Creation - Key Findings
+# Konflux YAML Component Creation - Complete Guide
 
-## Problem
-YAML-created Konflux components were getting stuck in "waiting for spec.containerImage to be set" state and not generating PAC (Pipelines as Code) PRs for `.tekton` pipeline files.
+## Critical Discovery: ImageRepository + Component Pattern
 
-## Root Cause
-The missing field was `spec.containerImage` in the component YAML definition.
+YAML-created Konflux components require **both** resources to work properly:
 
-## Solution
-Always include `spec.containerImage` when creating components via YAML:
+1. **ImageRepository** - Provisions the quay.io repository and robot accounts
+2. **Component** - Defines the build configuration with `spec.containerImage`
+
+The Konflux UI creates the ImageRepository automatically, but YAML creation requires explicit definition.
+
+## Complete Working Pattern
+
+Each component needs both resources in a single YAML file:
 
 ```yaml
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ImageRepository
+metadata:
+  labels:
+    appstudio.redhat.com/application: konflux-test
+    appstudio.redhat.com/component: your-component-name
+  name: your-component-name
+  namespace: your-tenant-namespace
+spec:
+  image:
+    name: your-tenant-namespace/your-component-name
+    visibility: public
+---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: Component
 metadata:
   annotations:
     build.appstudio.openshift.io/request: configure-pac
-    build.appstudio.openshift.io/pipeline: '{"name":"docker-build-oci-ta","bundle":"latest"}'
-    git-provider: github
-    git-provider-url: https://github.com
   name: your-component-name
   namespace: your-tenant-namespace
 spec:
   application: your-application
   componentName: your-component-name
-  containerImage: quay.io/redhat-user-workloads/{tenant-namespace}/{component-name}
+  containerImage: quay.io/redhat-user-workloads/your-tenant-namespace/your-component-name
   source:
     git:
-      dockerfileUrl: Dockerfile  # or path to your Dockerfile
+      dockerfileUrl: Dockerfile
       url: https://github.com/your-repo
       revision: main
 ```
 
 ## Key Fields Required
 
-### Mandatory for PAC Integration:
-- `spec.containerImage`: Registry path where built images will be pushed
-  - Pattern: `quay.io/redhat-user-workloads/{tenant-namespace}/{component-name}`
-- `metadata.annotations["build.appstudio.openshift.io/request"]`: Set to `configure-pac`
-- `metadata.annotations["git-provider"]`: Set to `github` or `gitlab`
-- `metadata.annotations["git-provider-url"]`: Git provider URL
+### ImageRepository:
+- `spec.image.name`: `{tenant-namespace}/{component-name}` (no quay.io prefix)
+- `spec.image.visibility`: `public` or `private`
+- `metadata.labels`: Link to application and component
 
-### For Nudging:
-- `metadata.annotations["build.appstudio.openshift.io/build-nudge-files"]`: Comma-separated list of files to update with image references
-- `spec.build-nudges-ref`: Array of component names that should nudge this component
+### Component:
+- `spec.containerImage`: `quay.io/redhat-user-workloads/{tenant-namespace}/{component-name}`
+- `metadata.annotations["build.appstudio.openshift.io/request"]`: Set to `configure-pac`
+
+### For Nudging (optional):
+- `metadata.annotations["build.appstudio.openshift.io/build-nudge-files"]`: Files to update with image references
+
+## Error Symptoms
+
+### Without ImageRepository:
+- 401 Unauthorized errors during builds
+- "Failed to get registry token" messages  
+- Builds failing at container push stage
+
+### Without containerImage:
+- Component stuck in "waiting for spec.containerImage" state
+- No PAC PR generated
+- No pipeline runs triggered
 
 ## Verification
-After applying the YAML, the component should immediately get:
-- PAC status: `"state": "enabled"`
-- GitHub PR created with `.tekton` pipeline files
-- Status message: `"done"`
+After applying the YAML:
+1. ImageRepository provisions quay.io repository
+2. Component gets PAC status: `"state": "enabled"`
+3. GitHub PR created with `.tekton` pipeline files
+4. Build pipeline runs successfully
 
-## Testing Results
-- ❌ **Without `containerImage`**: Component stuck in waiting state, no PAC PR
-- ✅ **With `containerImage`**: Immediate PAC integration and PR creation
-- ✅ **Post-patching existing components**: Adding `containerImage` via `kubectl patch` also works
+## OLM Pipeline Example
+This repository demonstrates a complete 3-component OLM pipeline:
+1. **Operator** (`konflux-component-operator.yaml`)
+2. **Bundle** (`konflux-component-bundle.yaml`) - nudges on operator CSV changes
+3. **Catalog** (`konflux-component-catalog.yaml`) - nudges on bundle FBC changes
 
-## UI vs YAML Comparison
-- **UI-created components**: Automatically get `containerImage` set
-- **YAML-created components**: Must explicitly include `containerImage`
-- Both approaches result in identical working components once properly configured
-
-## Current OLM Pipeline Status
-Successfully created 3-component OLM pipeline:
-1. `konflux-test-operator` (operator container)
-2. `konflux-test-bundle` (OLM bundle) 
-3. `konflux-test-catalog` (OLM catalog)
-
-All components now have PAC integration working with PRs:
-- PR #12: operator pipeline files
-- PR #13: bundle pipeline files  
-- PR #14: catalog pipeline files (pending)
+Each component follows the ImageRepository + Component pattern for reliable YAML-based creation.
