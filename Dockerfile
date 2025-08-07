@@ -1,12 +1,16 @@
-# Build the manager binary
-FROM registry.access.redhat.com/ubi8/ubi:latest AS builder
+# Build the manager binary  
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest AS builder
 ARG TARGETOS
 ARG TARGETARCH
 
 WORKDIR /workspace
 
-# Install Go
-RUN dnf install -y golang git && dnf clean all
+# Install Go from upstream
+RUN microdnf install -y tar gzip && \
+    curl -L https://go.dev/dl/go1.23.4.linux-amd64.tar.gz | tar -xz -C /usr/local && \
+    microdnf clean all
+
+ENV PATH="/usr/local/go/bin:${PATH}"
 
 # Copy the Go Modules manifests
 COPY go.mod go.mod
