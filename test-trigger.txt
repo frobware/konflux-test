@@ -1,4 +1,4 @@
 This file is created to test GitHub integration and pipeline triggering.
 Test nudging mechanism between components.
-Timestamp: 2025-08-07 16:05 UTC - Testing nudging from component A to component B
-Build trigger test #2 - Should nudge konflux-test-b058a-c2
+Timestamp: 2025-08-07 16:15 UTC - Testing nudging with bootstrap file
+Build trigger test #3 - Bootstrap nudge file created, should now update and nudge Component B
