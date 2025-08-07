@@ -1,10 +1,13 @@
 # Build the manager binary
-FROM registry.redhat.io/ubi8/go-toolset:1.23 AS builder
+FROM registry.access.redhat.com/ubi8/ubi:latest AS builder
 ARG TARGETOS
 ARG TARGETARCH
 
-USER 0
 WORKDIR /workspace
+
+# Install Go
+RUN dnf install -y golang git && dnf clean all
+
 # Copy the Go Modules manifests
 COPY go.mod go.mod
 COPY go.sum go.sum
@@ -26,7 +29,7 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o ma
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM registry.redhat.io/ubi8/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 WORKDIR /
 COPY --from=builder /workspace/manager .
 USER 1001
