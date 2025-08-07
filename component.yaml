@@ -11,7 +11,9 @@ metadata:
 spec:
   application: konflux-test
   componentName: konflux-test-operator
+  containerImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-operator
   source:
     git:
+      dockerfileUrl: Dockerfile
       url: https://github.com/frobware/konflux-test
       revision: main

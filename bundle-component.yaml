@@ -9,6 +9,7 @@ metadata:
 spec:
   application: konflux-test
   componentName: konflux-test-bundle
+  containerImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-bundle
   source:
     git:
       dockerfileUrl: bundle/Dockerfile

@@ -1,0 +1,32 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    build.appstudio.openshift.io/pipeline: '{"name":"docker-build-oci-ta","bundle":"latest"}'
+    build.appstudio.openshift.io/status: '{"pac":{"state":"enabled","merge-url":"https://github.com/frobware/konflux-test/pull/11","configuration-time":"Thu,
+      07 Aug 2025 18:59:06 UTC"},"message":"done"}'
+    git-provider: github
+    git-provider-url: https://github.com
+  creationTimestamp: "2025-08-07T18:58:56Z"
+  finalizers:
+  - test.appstudio.openshift.io/component
+  - pac.component.appstudio.openshift.io/finalizer
+  generation: 2
+  name: konflux-test-foo
+  namespace: amcdermo-tenant
+  ownerReferences:
+  - apiVersion: appstudio.redhat.com/v1alpha1
+    kind: Application
+    name: konflux-test
+    uid: f507f1ea-7969-414f-b644-2e2fbdcf562c
+  resourceVersion: "4698650700"
+  uid: c3c88882-8e40-4982-9653-ec40111eb782
+spec:
+  application: konflux-test
+  componentName: konflux-test-foo
+  containerImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-foo
+  resources: {}
+  source:
+    git:
+      dockerfileUrl: Dockerfile
+      url: https://github.com/frobware/konflux-test
