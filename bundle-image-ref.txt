@@ -1,0 +1,3 @@
+# Bundle image reference - updated by Konflux nudging  
+# This file contains the bundle component image digest
+quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-b058a-c2@sha256:3cea6a74d702213c26a542c514b2ca15e673380e9af5de9d24b27018d03482e4
