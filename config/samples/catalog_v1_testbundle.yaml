@@ -1,0 +1,12 @@
+apiVersion: catalog.konflux.example.com/v1
+kind: TestBundle
+metadata:
+  labels:
+    app.kubernetes.io/name: konflux-test-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: testbundle-sample
+spec:
+  operatorImage: "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:337734355c538af1ac269a8088405871fb7a7230f56c83210cfcb50a374e5b54"
+  bundleImage: "quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-b058a-c2@sha256:3cea6a74d702213c26a542c514b2ca15e673380e9af5de9d24b27018d03482e4"
+  version: "v1.0.0"
+  channel: "stable"
