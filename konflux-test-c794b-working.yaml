@@ -39,4 +39,4 @@ status:
   - konflux-test-b058a-c2
   gitops: {}
   lastBuiltCommit: 595c4248fd3001d9b9b8da94bacad8436ce21f2f
-  lastPromotedImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:3cf702fe0f8c67b150586094e5448195f5b43b51bacdf0ca109cc605cfa307d9
+  lastPromotedImage: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:3060d1ac235021ded8220da914f5587433633c4a91e72590ead076ff7834904a
