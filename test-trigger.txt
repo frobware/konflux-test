@@ -10,3 +10,4 @@ Build trigger test #8 - Changed to explicit file path instead of wildcards like 
 Build trigger test #9 - Testing nudging with explicit file path configuration
 Build trigger test #10 - Removed Dockerfile image reference, nudging should only update .sh files
 Build trigger test #11 - Added plain text files with descriptive names to test nudging of non-script files
+Build trigger test #12 - Retry after fixing symlink issues and pipeline conflicts
