@@ -10,9 +10,9 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: |
       event == "push" && target_branch == "main" && 
-      (body.head_commit.modified.exists(f, f.startsWith("component-2/")) ||
-       body.head_commit.added.exists(f, f.startsWith("component-2/")) ||
-       body.head_commit.removed.exists(f, f.startsWith("component-2/")))
+      (body.head_commit.modified.exists(f, f.startsWith("component-2/") || f.startsWith("config/samples/") || f.startsWith("nudge-files/") || f.contains("-working.yaml") || f.endsWith("-ref.txt")) ||
+       body.head_commit.added.exists(f, f.startsWith("component-2/") || f.startsWith("config/samples/") || f.startsWith("nudge-files/") || f.contains("-working.yaml") || f.endsWith("-ref.txt")) ||
+       body.head_commit.removed.exists(f, f.startsWith("component-2/") || f.startsWith("config/samples/") || f.startsWith("nudge-files/") || f.contains("-working.yaml") || f.endsWith("-ref.txt"))
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: konflux-test

@@ -9,9 +9,9 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: |
       event == "push" && target_branch == "main" && 
-      (body.head_commit.modified.exists(f, !f.startsWith("component-2/")) ||
-       body.head_commit.added.exists(f, !f.startsWith("component-2/")) ||
-       body.head_commit.removed.exists(f, !f.startsWith("component-2/")))
+      (body.head_commit.modified.exists(f, f == "Dockerfile" || f.startsWith("cmd/") || f.startsWith("api/") || f.startsWith("internal/") || f == "go.mod" || f == "go.sum") ||
+       body.head_commit.added.exists(f, f == "Dockerfile" || f.startsWith("cmd/") || f.startsWith("api/") || f.startsWith("internal/") || f == "go.mod" || f == "go.sum") ||
+       body.head_commit.removed.exists(f, f == "Dockerfile" || f.startsWith("cmd/") || f.startsWith("api/") || f.startsWith("internal/") || f == "go.mod" || f == "go.sum"))
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: konflux-test
