@@ -8,3 +8,4 @@ Build trigger test #6 - Removed revision field and cleaned up duplicate nudge re
 Build trigger test #7 - Fixed nudging to target .sh files like BPFman instead of Dockerfiles
 Build trigger test #8 - Changed to explicit file path instead of wildcards like BPFman
 Build trigger test #9 - Testing nudging with explicit file path configuration
+Build trigger test #10 - Removed Dockerfile image reference, nudging should only update .sh files

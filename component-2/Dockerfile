@@ -1,8 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
-# Reference to Component A's image that should be nudged by Renovate
-# This digest should be automatically updated when konflux-test-c794b builds
-ARG COMPONENT_A_IMAGE=quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-c794b@sha256:337734355c538af1ac269a8088405871fb7a7230f56c83210cfcb50a374e5b54
+# Component A image reference is loaded from shell script
+# No direct image reference here - nudging updates nudge-files/component-1.sh only
 
 # Load component-1 image reference  
 COPY nudge-files/component-1.sh /usr/local/bin/
