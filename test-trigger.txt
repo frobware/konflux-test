@@ -1,2 +1,2 @@
-This file is created to test GitHub App integration and pipeline triggering.
+This file is created to test GitLab integration and pipeline triggering.
 Timestamp: 2025-08-06 16:16 UTCRedeployment test - Wed  6 Aug 17:43:38 BST 2025

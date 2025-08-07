@@ -4,7 +4,11 @@ metadata:
   name: konflux-test-component-2
   namespace: amcdermo-tenant
   annotations:
+    build.appstudio.openshift.io/request: configure-pac
+    build.appstudio.openshift.io/pipeline: '{"name":"docker-build-oci-ta","bundle":"latest"}'
     build.appstudio.openshift.io/build-nudge-files: nudge-files/component-1.sh
+    git-provider: github
+    git-provider-url: https://github.com
 spec:
   application: konflux-test
   componentName: konflux-test-component-2

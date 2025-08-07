@@ -65,4 +65,4 @@ When component-1 builds, Konflux will automatically update the `COMPONENT_1_IMAG
 
 ## Repository Reference
 
-Both components reference `https://github.com/frobware/konflux-test` as the source repository for testing purposes. This repo will contain all these files for experimentation with Application-Per-Release patterns.
+Both components reference `https://gitlab.cee.redhat.com/amcdermo/konflux-test` as the source repository for testing purposes. This repo will contain all these files for experimentation with Application-Per-Release patterns.
