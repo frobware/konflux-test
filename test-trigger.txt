@@ -7,3 +7,4 @@ Build trigger test #5 - Added revision to Component B and build-nudge-files anno
 Build trigger test #6 - Removed revision field and cleaned up duplicate nudge references
 Build trigger test #7 - Fixed nudging to target .sh files like BPFman instead of Dockerfiles
 Build trigger test #8 - Changed to explicit file path instead of wildcards like BPFman
+Build trigger test #9 - Testing nudging with explicit file path configuration
