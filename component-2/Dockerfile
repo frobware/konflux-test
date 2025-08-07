@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM quay.io/ubi8/ubi-minimal:latest
 
 # Component A image reference is loaded from shell script
 # No direct image reference here - nudging updates nudge-files/component-1.sh only

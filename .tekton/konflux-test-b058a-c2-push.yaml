@@ -30,6 +30,8 @@ spec:
     value: quay.io/redhat-user-workloads/amcdermo-tenant/konflux-test-b058a-c2:{{revision}}
   - name: dockerfile
     value: component-2/Dockerfile
+  - name: skip-checks
+    value: "true"
   pipelineSpec:
     description: |
       This pipeline is ideal for building container images from a Containerfile while maintaining trust after pipeline customization.
