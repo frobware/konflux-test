@@ -1,8 +1,9 @@
 # Build the manager binary
-FROM quay.io/golang/golang:1.23 AS builder
+FROM registry.redhat.io/ubi8/go-toolset:1.23 AS builder
 ARG TARGETOS
 ARG TARGETARCH
 
+USER 0
 WORKDIR /workspace
 # Copy the Go Modules manifests
 COPY go.mod go.mod
@@ -25,9 +26,9 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o ma
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM quay.io/distroless/static:nonroot
+FROM registry.redhat.io/ubi8/ubi-minimal:latest
 WORKDIR /
 COPY --from=builder /workspace/manager .
-USER 65532:65532
+USER 1001
 
 ENTRYPOINT ["/manager"]

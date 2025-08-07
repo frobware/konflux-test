@@ -61,7 +61,7 @@ func (r *TestBundleReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	// Update status to show we're processing
 	bundle.Status.Phase = "Ready"
 	bundle.Status.ObservedGeneration = bundle.Generation
-	
+
 	if err := r.Status().Update(ctx, &bundle); err != nil {
 		logger.Error(err, "unable to update TestBundle status")
 		return ctrl.Result{}, err
