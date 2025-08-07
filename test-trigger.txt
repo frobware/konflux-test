@@ -4,3 +4,4 @@ Timestamp: 2025-08-07 16:15 UTC - Testing nudging with bootstrap file
 Build trigger test #3 - Bootstrap nudge file created, should now update and nudge Component B
 Build trigger test #4 - Component B now has correct current digest, testing nudging
 Build trigger test #5 - Added revision to Component B and build-nudge-files annotation
+Build trigger test #6 - Removed revision field and cleaned up duplicate nudge references
